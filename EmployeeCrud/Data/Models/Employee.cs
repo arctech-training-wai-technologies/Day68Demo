@@ -13,6 +13,7 @@ public class Employee
     public string Name { get; set; } = null!;
 
     [Required]
+    [Column(TypeName = "date")]
     public DateTime? DateOfBirth { get; set; }
 
     [Unicode(false)]
@@ -22,4 +23,10 @@ public class Employee
     [Unicode(false)]
     [Column(TypeName = "char(1)")]
     public char Gender { get; set; }
+
+    [Required]
+    public int DepartmentRefId { get; set; }
+
+    [ForeignKey(nameof(DepartmentRefId))]
+    public Department? DepartmentRef { get; set; }
 }

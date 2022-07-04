@@ -1,4 +1,5 @@
-﻿using EmployeeCrud.Data;
+﻿using System.Collections;
+using EmployeeCrud.Data;
 using EmployeeCrud.Data.Models;
 using EmployeeCrud.RepositoryPattern;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,14 @@ namespace EmployeeCrud.Services;
 public class EmployeeCrudService : IEmployeeCrudService
 {
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly IDepartmentRepository _departmentRepository;
 
-    public EmployeeCrudService(IEmployeeRepository employeeRepository)
+    public EmployeeCrudService(
+        IEmployeeRepository employeeRepository,
+        IDepartmentRepository departmentRepository)
     {
         _employeeRepository = employeeRepository;
+        _departmentRepository = departmentRepository;
     }
     public async Task<List<Employee>> GetAllAsync()
     {
@@ -38,12 +43,17 @@ public class EmployeeCrudService : IEmployeeCrudService
         await _employeeRepository.DeleteAsync(id);
     }
 
-    public async Task<bool> Exists(int id)
+    public async Task<bool> ExistsAsync(int id)
     {
         return await _employeeRepository.Exists(id);
     }
 
-    public async Task DeleteSelectedEmployees(int[] employeeIds)
+    public async Task<IEnumerable> GetDepartmentListForDropDownAsync()
+    {
+        return await _departmentRepository.GetAllAsync();
+    }
+
+    public async Task DeleteSelectedEmployeesAsync(int[] employeeIds)
     {
         foreach (var employeeId in employeeIds)
         {
@@ -51,7 +61,7 @@ public class EmployeeCrudService : IEmployeeCrudService
         }
     }
 
-    public async Task EmailRetiringEmployees()
+    public async Task EmailRetiringEmployeesAsync()
     {
         var employees = await _employeeRepository.GetAllAsync();
 

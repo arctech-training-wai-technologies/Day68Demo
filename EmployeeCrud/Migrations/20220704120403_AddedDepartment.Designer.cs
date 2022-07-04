@@ -4,6 +4,7 @@ using EmployeeCrud.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeCrud.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220704120403_AddedDepartment")]
+    partial class AddedDepartment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +45,7 @@ namespace EmployeeCrud.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("EmployeeCrud.Data.Models.Employee", b =>
@@ -62,7 +64,7 @@ namespace EmployeeCrud.Migrations
 
                     b.Property<DateTime?>("DateOfBirth")
                         .IsRequired()
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DepartmentRefId")
                         .HasColumnType("int");
@@ -85,39 +87,6 @@ namespace EmployeeCrud.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("EmployeeCrud.Data.Models.Salary", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<decimal>("Basic")
-                        .HasColumnType("decimal(15,2)");
-
-                    b.Property<decimal>("Bonus")
-                        .HasColumnType("decimal(15,2)");
-
-                    b.Property<decimal>("Da")
-                        .HasColumnType("decimal(15,2)");
-
-                    b.Property<DateTime>("EffectiveFrom")
-                        .HasColumnType("date");
-
-                    b.Property<int>("EmployeeRefId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Hra")
-                        .HasColumnType("decimal(15,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeRefId");
-
-                    b.ToTable("Salaries");
-                });
-
             modelBuilder.Entity("EmployeeCrud.Data.Models.Employee", b =>
                 {
                     b.HasOne("EmployeeCrud.Data.Models.Department", "DepartmentRef")
@@ -127,17 +96,6 @@ namespace EmployeeCrud.Migrations
                         .IsRequired();
 
                     b.Navigation("DepartmentRef");
-                });
-
-            modelBuilder.Entity("EmployeeCrud.Data.Models.Salary", b =>
-                {
-                    b.HasOne("EmployeeCrud.Data.Models.Employee", "EmployeeRef")
-                        .WithMany()
-                        .HasForeignKey("EmployeeRefId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EmployeeRef");
                 });
 #pragma warning restore 612, 618
         }

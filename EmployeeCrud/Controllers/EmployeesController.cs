@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using EmployeeCrud.Data;
 using EmployeeCrud.Data.Models;
 using EmployeeCrud.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeCrud.Controllers;
 
@@ -54,8 +55,9 @@ public class EmployeesController : Controller
     }
 
     // GET: Employees/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+        ViewData["DepartmentRefId"] = new SelectList(await _employeeCrudService.GetDepartmentListForDropDownAsync(), "Id", "Name");
         return View();
     }
 
@@ -64,13 +66,15 @@ public class EmployeesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,DateOfBirth,Address,Gender")] Employee employee)
+    public async Task<IActionResult> Create(Employee employee)
     {
         if (ModelState.IsValid)
         {
             await _employeeCrudService.CreateAsync(employee);
             return RedirectToAction(nameof(Index));
         }
+
+        ViewData["DepartmentRefId"] = new SelectList(await _employeeCrudService.GetDepartmentListForDropDownAsync(), "Id", "Name", employee.DepartmentRefId);
         return View(employee);
     }
 
@@ -87,6 +91,8 @@ public class EmployeesController : Controller
         {
             return NotFound();
         }
+
+        ViewData["DepartmentRefId"] = new SelectList(await _employeeCrudService.GetDepartmentListForDropDownAsync(), "Id", "Name", employee.DepartmentRefId);
         return View(employee);
     }
 
@@ -95,7 +101,7 @@ public class EmployeesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DateOfBirth,Address,Gender")] Employee employee)
+    public async Task<IActionResult> Edit(int id, Employee employee)
     {
         if (id != employee.Id)
         {
@@ -110,7 +116,7 @@ public class EmployeesController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (! await _employeeCrudService.Exists(employee.Id))
+                if (! await _employeeCrudService.ExistsAsync(employee.Id))
                 {
                     return NotFound();
                 }
@@ -121,6 +127,8 @@ public class EmployeesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+
+        ViewData["DepartmentRefId"] = new SelectList(await _employeeCrudService.GetDepartmentListForDropDownAsync(), "Id", "Name", employee.DepartmentRefId);
         return View(employee);
     }
 

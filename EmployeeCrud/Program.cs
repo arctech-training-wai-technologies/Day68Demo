@@ -18,6 +18,12 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 //builder.Services.AddScoped<IEmployeeRepository, MyMongoDbRepository>();
 builder.Services.AddScoped<IEmployeeCrudService, EmployeeCrudService>();
 
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IDepartmentCrudService, DepartmentCrudService>();
+
+builder.Services.AddScoped<ISalaryRepository, SalaryRepository>();
+builder.Services.AddScoped<ISalaryCrudService, SalaryCrudService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

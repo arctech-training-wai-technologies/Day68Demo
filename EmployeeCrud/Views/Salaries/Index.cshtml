@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EmployeeCrud.Data.Models.Employee>
+﻿@model IEnumerable<EmployeeCrud.Data.Models.Salary>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Basic)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
+                @Html.DisplayNameFor(model => model.Hra)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.Da)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Gender)
+                @Html.DisplayNameFor(model => model.Bonus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DepartmentRef)
+                @Html.DisplayNameFor(model => model.EffectiveFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeRef)
             </th>
             <th></th>
         </tr>
@@ -34,19 +37,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Basic)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
+                @Html.DisplayFor(modelItem => item.Hra)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
+                @Html.DisplayFor(modelItem => item.Da)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Gender)
+                @Html.DisplayFor(modelItem => item.Bonus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DepartmentRef.Name)
+                @Html.DisplayFor(modelItem => item.EffectiveFrom)
+            </td>
+            <td>
+                @item.EmployeeRef.Name (@item.EmployeeRef.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

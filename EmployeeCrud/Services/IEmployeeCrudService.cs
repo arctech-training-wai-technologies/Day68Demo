@@ -1,4 +1,5 @@
-﻿using EmployeeCrud.Data.Models;
+﻿using System.Collections;
+using EmployeeCrud.Data.Models;
 
 namespace EmployeeCrud.Services;
 
@@ -10,7 +11,10 @@ public interface IEmployeeCrudService
     public Task CreateAsync(Employee employee);
     public Task UpdateAsync(Employee employee);
     public Task DeleteAsync(int id);
-    public Task DeleteSelectedEmployees(int[] employeeIds);
-    public Task EmailRetiringEmployees();
-    Task<bool> Exists(int id);
+
+    public Task DeleteSelectedEmployeesAsync(int[] departmentIds);
+    public Task EmailRetiringEmployeesAsync();
+
+    Task<bool> ExistsAsync(int id);
+    Task<IEnumerable> GetDepartmentListForDropDownAsync();
 }
