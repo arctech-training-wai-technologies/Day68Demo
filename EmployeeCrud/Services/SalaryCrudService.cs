@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using EmployeeCrud.Data.Models;
 using EmployeeCrud.RepositoryPattern;
+using EmployeeCrud.ViewModel;
 
 namespace EmployeeCrud.Services;
 
@@ -46,7 +47,7 @@ public class SalaryCrudService : ISalaryCrudService
 
     public async Task<IEnumerable> GetEmployeeForDropDownAsync()
     {
-        var employees = await _employeeRepository.GetAllAsync();
+        var employees = await _employeeRepository.GetAllAsync<EmployeeDropDownItemViewModel>();
 
         var employeesForDropDown = employees.Select(e => new
         {

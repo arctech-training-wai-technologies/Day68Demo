@@ -1,4 +1,4 @@
-﻿@model EmployeeCrud.Data.Models.Employee
+﻿@model EmployeeCrud.ViewModel.EmployeeViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -36,10 +36,10 @@
             @Html.DisplayFor(model => model.Gender)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartmentRef)
+            @Html.DisplayNameFor(model => model.DepartmentName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartmentRef.Name)
+            @Html.DisplayFor(model => model.DepartmentName)
         </dd>
     </dl>
     

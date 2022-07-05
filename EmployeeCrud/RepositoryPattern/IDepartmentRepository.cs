@@ -1,17 +1,9 @@
 ﻿using EmployeeCrud.Data.Models;
+using EmployeeCrud.RepositoryPattern.RepositoryBase;
 
 namespace EmployeeCrud.RepositoryPattern;
 
-public interface IDepartmentRepository
+public interface IDepartmentRepository : IRepository<Department>
 {
-    public Task<List<Department>> GetAllAsync();
-
-    public Task<Department?> GetByIdAsync(int id);
-
-    public Task CreateAsync(Department department);
-
-    public Task UpdateAsync(Department department);
-
-    public Task DeleteAsync(int id);
-    Task<bool> Exists(int departmentId);
+    public Task<List<TViewModel>> GetAllWithMoreThan2Employees<TViewModel>();
 }

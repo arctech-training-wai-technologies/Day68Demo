@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using EmployeeCrud.Data;
 using EmployeeCrud.Data.Models;
 using EmployeeCrud.Services;
+using EmployeeCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeCrud.Controllers;
@@ -66,7 +67,7 @@ public class EmployeesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Employee employee)
+    public async Task<IActionResult> Create(EmployeeViewModel employee)
     {
         if (ModelState.IsValid)
         {
@@ -75,6 +76,7 @@ public class EmployeesController : Controller
         }
 
         ViewData["DepartmentRefId"] = new SelectList(await _employeeCrudService.GetDepartmentListForDropDownAsync(), "Id", "Name", employee.DepartmentRefId);
+
         return View(employee);
     }
 
@@ -101,7 +103,7 @@ public class EmployeesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Employee employee)
+    public async Task<IActionResult> Edit(int id, EmployeeViewModel employee)
     {
         if (id != employee.Id)
         {

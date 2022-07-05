@@ -1,56 +1,37 @@
-﻿using EmployeeCrud.Data;
+﻿using AutoMapper;
+using EmployeeCrud.Data;
 using EmployeeCrud.Data.Models;
+using EmployeeCrud.RepositoryPattern.RepositoryBase;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeCrud.RepositoryPattern;
 
-public class DepartmentRepository : IDepartmentRepository
+public class DepartmentRepository : Repository<Department>, IDepartmentRepository
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ApplicationDbContext _db;
+    private readonly IMapper _mapper;
 
-    public DepartmentRepository(ApplicationDbContext context)
+    public DepartmentRepository(ApplicationDbContext db, IMapper mapper) : base(db, mapper)
     {
-        _context = context;
+        _db = db;
+        _mapper = mapper;
     }
 
-    public async Task<List<Department>> GetAllAsync()
+    public async Task<List<TViewModel>> GetAllWithMoreThan2Employees<TViewModel>()
     {
-        return await _context.Departments.ToListAsync();
-    }
+        var departmentsQuery =
+            from e in _db.Employees
+            join d in DbSet on e.DepartmentRefId equals d.Id
+            group new {e, d} by new {d.Id, d.Name}
+            into g
+            where g.Count() > 2
+            select new
+            {
+                DepartmentId = g.Key.Id,
+                DepartmentName = g.Key.Name,
+                EmployeeCount = g.Count()
+            };
 
-    public async Task<Department?> GetByIdAsync(int id)
-    {
-        var department = await _context.Departments
-            .FirstOrDefaultAsync(m => m.Id == id);
-
-        return department;
-    }
-
-    public async Task CreateAsync(Department department)
-    {
-        _context.Add(department);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Department department)
-    {
-        _context.Update(department);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task DeleteAsync(int id)
-    {
-        var department = await _context.Departments.FindAsync(id);
-        if (department != null)
-        {
-            _context.Departments.Remove(department);
-        }
-
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task<bool> Exists(int id)
-    {
-        return await _context.Departments.AnyAsync(e => e.Id == id);
+        return await _mapper.ProjectTo<TViewModel>(departmentsQuery).ToListAsync();
     }
 }

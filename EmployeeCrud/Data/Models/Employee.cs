@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EmployeeCrud.RepositoryPattern.RepositoryBase;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeCrud.Data.Models;
 
-public class Employee
+public class Employee : DataModelBase
 {
-    public int Id { get; set; }
-
     [Unicode(false)]
     [StringLength(50)]
     public string Name { get; set; } = null!;

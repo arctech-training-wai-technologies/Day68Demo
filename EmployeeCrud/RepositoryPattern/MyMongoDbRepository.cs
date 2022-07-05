@@ -1,36 +1,14 @@
-﻿using EmployeeCrud.Data.Models;
+﻿using AutoMapper;
+using EmployeeCrud.Data;
+using EmployeeCrud.Data.Models;
+using EmployeeCrud.RepositoryPattern.RepositoryBase;
+using NuGet.Protocol.Core.Types;
 
 namespace EmployeeCrud.RepositoryPattern;
 
-public class MyMongoDbRepository : IEmployeeRepository
+public class MyMongoDbRepository : Repository<Employee>, IEmployeeRepository
 {
-    public Task<List<Employee>> GetAllAsync()
+    public MyMongoDbRepository(ApplicationDbContext db, IMapper mapper) : base(db, mapper)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Employee?> GetByIdAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task CreateAsync(Employee employee)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task UpdateAsync(Employee employee)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> Exists(int employeeId)
-    {
-        throw new NotImplementedException();
     }
 }

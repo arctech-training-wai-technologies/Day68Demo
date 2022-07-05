@@ -1,5 +1,6 @@
 ﻿using EmployeeCrud.Data.Models;
 using EmployeeCrud.Services;
+using EmployeeCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -63,7 +64,7 @@ public class DepartmentsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Department department)
+    public async Task<IActionResult> Create(DepartmentViewModel department)
     {
         if (ModelState.IsValid)
         {
@@ -94,7 +95,7 @@ public class DepartmentsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Department department)
+    public async Task<IActionResult> Edit(int id, DepartmentViewModel department)
     {
         if (id != department.Id)
         {

@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EmployeeCrud.RepositoryPattern.RepositoryBase;
 
 namespace EmployeeCrud.Data.Models;
 
-public class Salary
+public class Salary : DataModelBase
 {
-    public int Id { get; set; }
-
     [Column(TypeName = "decimal(15, 2)")]
     public decimal Basic { get; set; }
 

@@ -1,6 +1,8 @@
+using EmployeeCrud;
 using EmployeeCrud.Data;
 using EmployeeCrud.RepositoryPattern;
 using EmployeeCrud.Services;
+using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,8 @@ builder.Services.AddScoped<IDepartmentCrudService, DepartmentCrudService>();
 
 builder.Services.AddScoped<ISalaryRepository, SalaryRepository>();
 builder.Services.AddScoped<ISalaryCrudService, SalaryCrudService>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 

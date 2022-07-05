@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using EmployeeCrud.RepositoryPattern.RepositoryBase;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeCrud.Data.Models;
 
-public class Department
+public class Department : DataModelBase
 {
-    public int Id { get; set; }
-
     [Required]
     [Unicode(false)]
     [StringLength(50)]

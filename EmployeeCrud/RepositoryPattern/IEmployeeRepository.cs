@@ -1,17 +1,9 @@
 ﻿using EmployeeCrud.Data.Models;
+using EmployeeCrud.RepositoryPattern.RepositoryBase;
 
 namespace EmployeeCrud.RepositoryPattern;
 
-public interface IEmployeeRepository
+public interface IEmployeeRepository : IRepository<Employee>
 {
-    public Task<List<Employee>> GetAllAsync();
-
-    public Task<Employee?> GetByIdAsync(int id);
-
-    public Task CreateAsync(Employee employee);
-
-    public Task UpdateAsync(Employee employee);
-
-    public Task DeleteAsync(int id);
-    Task<bool> Exists(int employeeId);
+    public Task<List<TViewModel>> GetSalesEmployeesAboveSalaryLimit<TViewModel>(decimal salaryLimit);
 }
